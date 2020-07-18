@@ -1,0 +1,13 @@
+body {
+    margin-top: 4.5rem;
+}
+
+.sticky-offset {
+    top: 4.5rem;
+}
+
+.list-group-item-danger.list-group-item-action.active {
+    color: #fff;
+    background-color: #e3342f;
+    border-color: #e3342f;
+}
