@@ -11,3 +11,10 @@ body {
     background-color: #e3342f;
     border-color: #e3342f;
 }
+
+.description-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

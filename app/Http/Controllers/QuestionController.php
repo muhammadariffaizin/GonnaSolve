@@ -26,4 +26,13 @@ class QuestionController extends Controller
         ]);
         return redirect()->back();
     }
+
+    public function showDetail($id) {
+        $question = DB::table('questions')
+                        ->join('users', 'users.id', '=', 'questions.question_author')
+                        ->select('users.id', 'users.name', 'users.description', 'questions.*')
+                        ->where('question_id', $id)
+                        ->get();
+        return view('question_detail', compact('question'));
+    }
 }

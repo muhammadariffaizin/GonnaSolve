@@ -3,12 +3,11 @@
 namespace GonnaSolve\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use GonnaSolve\User;
 
 class ModalController extends Controller
 {
-    public function loadModal($id) {
+    public function loadModal() {
         return view('edit_profile');
     }
 

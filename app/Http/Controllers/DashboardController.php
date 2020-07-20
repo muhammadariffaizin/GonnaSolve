@@ -3,6 +3,9 @@
 namespace GonnaSolve\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use GonnaSolve\Question;
 
 class DashboardController extends Controller
 {
@@ -23,6 +26,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $id = Auth::user()->id;
+        $questions = DB::table('questions')
+                        ->where('question_author', $id)
+                        ->get();
+        return view('dashboard', compact('questions'));
     }
 }

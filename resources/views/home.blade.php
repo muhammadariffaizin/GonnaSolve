@@ -11,9 +11,11 @@
 @section('modal-content')
     <div class="alert alert-info" role="alert">
         <h4 class="alert-heading">Tips on getting good answers quickly</h4>
-        <p class="mb-0">Make sure your question has not been asked already</p>
-        <p class="mb-0">Keep your question short and to the point</p>
-        <p class="mb-0">Double-check grammar and spelling</p>
+        <ul>
+            <li>Make sure your question has not been asked already</li>
+            <li>Keep your question short and to the point</li>
+            <li>Double-check grammar and spelling</li>
+        </ul>
     </div>
     <input type="text" name="QuestionAuthor" value="{{ Auth::check() ? Auth::user()->id : ''}}" hidden>
     <div class="form-group">
@@ -28,7 +30,7 @@
 
 @section('modal-footer')
     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-    <button type="submit" class="btn btn-primary">Add Question</button>
+    <button type="submit" class="btn btn-danger">Add Question</button>
 @endsection
 
 @section('content')
@@ -58,8 +60,8 @@
                             </div>
                         </div>
                         <div>
-                            <a href="#" class="card-title card-link h5"><b>{{ $question->question_title }}</b></a>
-                            <p class="card-text">{{ $question->question_content }}</p>
+                            <a href="{{ url('/question', $question->question_id) }}" class="card-title card-link h5"><b>{{ $question->question_title }}</b></a>
+                            <p class="card-text description-text">{{ $question->question_content }}</p>
                         </div>
                     </div>
                 </div>

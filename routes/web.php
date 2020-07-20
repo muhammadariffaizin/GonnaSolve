@@ -13,7 +13,8 @@
 
 Route::get('/', 'QuestionController@index')->name('index');
 Route::post('createQuestion', 'QuestionController@create')->name('createQuestion');
-Route::get('editProfile/{id}', 'ModalController@loadModal')->name('editProfile');
+Route::get('/question/{id}', 'QuestionController@showDetail')->name('showDetail');
+Route::get('/editProfile', 'ModalController@loadModal')->name('editProfile');
 Route::post('updateProfile', 'ModalController@update')->name('updateProfile');
 
 Auth::routes();

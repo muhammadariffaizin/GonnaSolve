@@ -36,7 +36,7 @@
                 </a>
                 <ul class="navbar-nav mr-4">
                     <li class="nav-item {{ (request()->is('/')) ? 'active' : '' }}">
-                        <a class="nav-link" href="./">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="{{ route('index') }}">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Answers</a>
