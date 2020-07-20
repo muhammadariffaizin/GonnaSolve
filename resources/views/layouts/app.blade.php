@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -82,9 +83,36 @@
                 </div>
             </div>
         </nav>
+        <div id="modal">
+            <div id="pageModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="pageModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content" id="pageModalContent">
+                        <div class="modal-header">
+                            <h5 class="modal-title">@yield('modal-title')</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="@yield('modal-action')" method="POST" class="form">
+                            @csrf
+                            <div class="modal-body">
+                                @yield('modal-content')
+                            </div>
+                            <div class="modal-footer">
+                                @yield('modal-footer')
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <main class="py-4 container">
             @yield('content')
         </main>
     </div>
 </body>
 </html>
+
+<script>
+    @yield('scripts')
+</script>
