@@ -54,7 +54,6 @@ class QuestionController extends Controller
                         ->where('question_id', $id)
                         ->orderby('answers.updated_at', 'DESC')
                         ->get();
-        // return compact('question', 'answers');
         return view('question_detail', compact('question', 'answers'));
     }
 }

@@ -36,10 +36,10 @@
                 </a>
                 <ul class="navbar-nav mr-4">
                     <li class="nav-item {{ (request()->is('/')) ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('index') }}">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="{{ route('index') }}">{{ __('Home') }} <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Answers</a>
+                    <li class="nav-item {{ (request()->is('answers')) ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('answers') }}">{{ __('Answers') }}</a>
                     </li>
                 </ul>
                 <form class="form-inline mt-2 mt-md-0">
