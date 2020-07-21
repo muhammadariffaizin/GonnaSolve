@@ -14,6 +14,7 @@
 Route::get('/', 'QuestionController@index')->name('index');
 Route::post('createQuestion', 'QuestionController@create')->name('createQuestion');
 Route::get('/question/{id}', 'QuestionController@showDetail')->name('showDetail');
+Route::post('createAnswer', 'AnswerController@create')->name('createAnswer');
 Route::get('/editProfile', 'ModalController@loadModal')->name('editProfile');
 Route::post('updateProfile', 'ModalController@update')->name('updateProfile');
 

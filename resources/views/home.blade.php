@@ -55,8 +55,8 @@
                     <div class="d-flex flex-row">
                         <div class="d-flex align-items-center mr-3 text-center">
                             <div>
-                                <h4 class="mb-0">24</h4>
-                                <p>answers</p>
+                                <h4 class="mb-0">{{ $question->count_answer ? $question->count_answer : '0' }}</h4>
+                                <p class="mb-0">answers</p>
                             </div>
                         </div>
                         <div>

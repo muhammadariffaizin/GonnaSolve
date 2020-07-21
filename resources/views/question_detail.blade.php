@@ -27,29 +27,43 @@
             <div class="card">
                 <div class="card-header">Answer</div>
                 <div class="card-body">
-                    <h6>User 1 (Tanggal) (Jam)s</h6>
-                    <div class="card-header">Jawaban dari user tentang soal</div>
-                    <div class="form-group row mb-0">
-                        <div class="col-md-8 offset-md-4">
-                            <button type="submit" class="btn btn-primary">Edit</button>
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                    <div class="list-group list-group-flush">
+                        @foreach($answers as $key => $answer)
+                        <div class="list-group-item">
+                            <p>{{ $answer->answer_content }}</p>
+                            <div>
+                                <small>
+                                    <span>{{ $answer->name }}</span> |
+                                    <span>Created {{ $answer->created_at }}</span> |
+                                    <span>Edited {{ $answer->updated_at }}</span>
+                                </small>
+                            </div>
                         </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row justifiy-content-center">
+    <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Your Answer</div>
                 <div class="card-body">
-                    <form action="">
-                        <div class="form-group">
-                            <textarea class="form-control" name="Answer" rows="3" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-danger">Add Answer</button>
-                    </form>
+                    @auth
+                        <form action="{{ route('createAnswer') }}" method="POST" class="form">
+                            @csrf
+                            <input type="text" name="AnswerAuthor" value="{{ Auth::user()->id }}" hidden>
+                            <input type="text" name="QuestionId" value="{{ $question[0]->question_id }}" hidden>
+                            <div class="form-group">
+                                <textarea class="form-control" name="AnswerContent" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-danger">Add Answer</button>
+                        </form>
+                    @else
+                        <p>Please sign up and login before add an answer</p>
+                        <a href="{{ route('register') }}" class="btn btn-danger">Sign Up</a>
+                    @endauth
                 </div>
             </div>
         </div>

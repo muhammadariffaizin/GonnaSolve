@@ -26,21 +26,42 @@
                 <div class="card-header">Questions</div>
 
                 <div class="card-body">
-                    @foreach($questions as $key => $question)
-                        <div class="d-flex flex-row p-3 border-bottom">
-                            <div class="d-flex align-items-center mr-3 text-center">
+                    <div class="list-group list-group-flush">
+                        @foreach($questions as $key => $question)
+                            <div class="list-group-item d-flex">
+                                <div class="d-flex align-items-center mr-3 text-center">
+                                    <div>
+                                        <h4 class="mb-0">{{ $question->count_answer ? $question->count_answer : '0' }}</h4>
+                                        <p>answers</p>
+                                    </div>
+                                </div>
                                 <div>
-                                    <h4 class="mb-0">24</h4>
-                                    <p>answers</p>
+                                    <a href="{{ url('/question', $question->question_id) }}" class="card-title card-link h5"><b>{{ $question->question_title }}</b></a>
+                                    <p class="card-text description-text">{{ $question->question_content }}</p>
                                 </div>
                             </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header">Answers</div>
+
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        @foreach($answers as $key => $answer)
+                        <div class="list-group-item">
+                            <a href="{{ url('/question', $answer->question_id) }}" class="h5 font-weight-bold">{{ $answer->question_title }}</a>
+                            <p>{{ $answer->answer_content }}</p>
                             <div>
-                                <a href="{{ url('/question', $question->question_id) }}" class="card-title card-link h5"><b>{{ $question->question_title }}</b></a>
-                                <p class="card-text description-text">{{ $question->question_content }}</p>
+                                <small>
+                                    <span>Created {{ $answer->created_at }}</span> |
+                                    <span>Edited {{ $answer->updated_at }}</span>
+                                </small>
                             </div>
                         </div>
-                        <div class="divider"></div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>

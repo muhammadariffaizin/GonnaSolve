@@ -1,3 +1,17 @@
+## About GonnaSolve
+This project was builded for the Software House task. Creating simple online forum that adopt between [Quora](https://quora.com) and [StackOverflow](https://stackoverflow.com) concept.
+
+### Team
+- Ivan Abdillah Rahman (05111840000137)
+- Johnivan Aldo Sudiono (05111940000051)
+- Muhammad Arif Faizin (05111940000060)
+- Adrian Santoso (05111940000130)
+
+### Build by
+- Laravel v5.8
+- Bootstrap v4.1
+- jQuery v3.5.1
+
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
 <p align="center">
