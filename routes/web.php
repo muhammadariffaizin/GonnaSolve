@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 /*
 |--------------------------------------------------------------------------
@@ -11,14 +11,29 @@
 |
 */
 
-Route::get('/', 'QuestionController@index')->name('index');
-Route::get('/answers', 'AnswerController@index')->name('answers');
-Route::post('/createQuestion', 'QuestionController@create')->name('createQuestion');
-Route::get('/question/{id}', 'QuestionController@showDetail')->name('showDetail');
-Route::post('/createAnswer', 'AnswerController@create')->name('createAnswer');
-Route::get('/editProfile', 'ModalController@loadModal')->name('editProfile');
-Route::post('/updateProfile', 'ModalController@update')->name('updateProfile');
-
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+
+Route::get('/', 'QuestionController@index')->name('index');
+Route::prefix('question')->group(function() {
+    Route::get('/{id}', 'QuestionController@show_detail_question')->name('question.show_detail');
+    Route::post('/create', 'QuestionController@create')->name('question.create');
+    Route::get('/edit/{id}', 'QuestionController@edit')->name('question.edit');
+    Route::post('/update', 'QuestionController@update')->name('question.update');
+    Route::get('/delete/{id}', 'QuestionController@delete')->name('question.delete');
+});
+Route::get('/search', 'QuestionController@search')->name('search');
+
+Route::prefix('answer')->group(function() {
+    Route::get('/show_all', 'AnswerController@index')->name('answer.show_all');
+    Route::post('/create', 'AnswerController@create')->name('answer.create');
+    Route::get('/edit/{id}', 'AnswerController@edit')->name('answer.edit');
+    Route::post('/update', 'AnswerController@update')->name('answer.update');
+    Route::get('/delete/{id}', 'AnswerController@delete')->name('answer.delete');
+});
+
+Route::prefix('profile')->group(function() {
+    Route::get('/edit', 'ModalController@load_modal')->name('profile.edit');
+    Route::post('/update', 'ModalController@update')->name('profile.update');
+});

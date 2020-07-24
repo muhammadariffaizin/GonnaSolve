@@ -10,24 +10,8 @@ use GonnaSolve\Question;
 class QuestionController extends Controller
 {
     public function index() {
-        $count_answer = DB::table('questions')
-                        ->join('answers', 'questions.question_id', '=', 'answers.question_id')
-                        ->select('questions.question_id', DB::raw('COUNT(*) AS count_answer'))
-                        ->groupBy('questions.question_id');
-        $questions_property = DB::table('questions')
-                            ->select('questions.question_id', 'questions.question_title', 'questions.question_content',
-                                    'questions.question_author', 'questions.created_at', 'questions.updated_at', 
-                                    'count_answer.count_answer')
-                            ->leftJoinSub($count_answer, 'count_answer', function($join) {
-                                $join->on('questions.question_id', '=', 'count_answer.question_id');
-                            });
-        $questions = DB::table('users')
-                    ->select('users.id', 'users.name', 'users.description', 'questions_property.*')
-                    ->leftJoinSub($questions_property, 'questions_property', function($join) {
-                        $join->on('users.id', '=', 'questions_property.question_author');
-                    })
-                    ->orderBy('questions_property.question_author', 'DESC')
-                    ->get();
+        $questions = Question::orderBy('questions.created_at', 'DESC')
+                        ->paginate(10);
         return view('home', compact('questions'));
     }
 
@@ -41,19 +25,39 @@ class QuestionController extends Controller
             ]);
         return redirect()->back();
     }
+
+    public function edit($id) {
+        $question = Question::where('id', $id)
+                    ->first();
+        return view('question_edit', compact('question'));
+    }
+
+    public function update(Request $request) {
+        Question::where('id', $request->id)->update([
+            'question_title' => $request->question_title,
+            'question_content' => $request->question_content,
+        ]);
+        return redirect()->back();
+    }
+
+    public function delete($id) {
+        $delete = Question::where('id', $id);
+        $delete->delete();
+        return redirect()->route('index');
+    }
         
-    public function showDetail($id) {
-        $question = DB::table('questions')
-                        ->join('users', 'users.id', '=', 'questions.question_author')
-                        ->select('users.id', 'users.name', 'users.description', 'questions.*')
-                        ->where('question_id', $id)
-                        ->get();
-        $answers = DB::table('answers')
-                        ->join('users', 'users.id', '=', 'answers.answer_author')
-                        ->select('users.id', 'users.name', 'users.description', 'answers.*')
-                        ->where('question_id', $id)
-                        ->orderby('answers.updated_at', 'DESC')
-                        ->get();
+    public function show_detail_question($id) {
+        $question = Question::where('id', $id)->first();
+        $answers = Answer::where('question_id', $id)
+                    ->orderBy('answers.updated_at', 'DESC')->get();
         return view('question_detail', compact('question', 'answers'));
+    }
+
+    public function search(Request $request) {
+        $find = $request->search;
+        $questions = Question::where('question_title', 'like', '%'.$find.'%')
+                    ->orderBy('updated_at', 'DESC')
+                    ->paginate(10);
+        return view('search', compact('questions'));
     }
 }

@@ -7,8 +7,8 @@ use GonnaSolve\User;
 
 class ModalController extends Controller
 {
-    public function loadModal() {
-        return view('edit_profile');
+    public function load_modal() {
+        return view('profile_edit');
     }
 
     public function update(Request $request) {

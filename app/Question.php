@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
+    protected $table = 'questions';
+
     protected $fillable = [
         'question_title', 
         'question_content', 
@@ -13,4 +15,12 @@ class Question extends Model
         'question_status',
         'topic_id'
     ];
+
+    public function user() {
+        return $this->belongsTo('GonnaSolve\User', 'question_author');
+    }
+
+    public function answer() {
+        return $this->hasMany('GonnaSolve\Answer');
+    }
 }
