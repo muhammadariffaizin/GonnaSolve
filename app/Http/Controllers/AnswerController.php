@@ -4,11 +4,22 @@ namespace GonnaSolve\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use GonnaSolve\Answer;
 use GonnaSolve\Question;
 
 class AnswerController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index() {
         $answers = Answer::orderBy('answers.updated_at', 'DESC')
                     ->paginate(10);

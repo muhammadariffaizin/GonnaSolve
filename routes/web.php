@@ -13,9 +13,17 @@
 
 Auth::routes();
 
-Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
-Route::get('/', 'QuestionController@index')->name('index');
+Route::get('/', function() {
+    if(Auth::check()) {
+        return redirect()->route('home');
+    } else {
+        return view('welcome');
+    }
+})->name('index');
+
+Route::get('/dashboard', 'ProfileController@index')->name('dashboard');
+Route::get('/home', 'QuestionController@index')->name('home');
 Route::prefix('question')->group(function() {
     Route::get('/{id}', 'QuestionController@show_detail_question')->name('question.show_detail');
     Route::post('/create', 'QuestionController@create')->name('question.create');
@@ -34,6 +42,6 @@ Route::prefix('answer')->group(function() {
 });
 
 Route::prefix('profile')->group(function() {
-    Route::get('/edit', 'ModalController@load_modal')->name('profile.edit');
-    Route::post('/update', 'ModalController@update')->name('profile.update');
+    Route::get('/edit', 'ProfileController@edit')->name('profile.edit');
+    Route::post('/update', 'ProfileController@update')->name('profile.update');
 });

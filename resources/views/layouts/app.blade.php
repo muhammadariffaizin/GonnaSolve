@@ -1,28 +1,6 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.master')
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'GonnaSolve') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/gonna-solve.css') }}" rel="stylesheet">
-</head>
-
-<body>
+@section('body')
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-danger shadow">
             <div class="container">
@@ -36,51 +14,52 @@
                         {{ config('app.name', 'GonnaSolve') }}
                     </a>
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item {{ (request()->is('/')) ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('index') }}">{{ __('Home') }} <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item {{ (request()->is('answer/show_all')) ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('answer.show_all') }}">{{ __('Answers') }}</a>
-                        </li>
+                        @auth
+                            <li class="nav-item {{ (request()->is('home')) ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }} <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item {{ (request()->is('answer/show_all')) ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('answer.show_all') }}">{{ __('Answers') }}</a>
+                            </li>
+                        @endauth
                     </ul>
                     <div class="d-md-flex">
-                        <form id="formSearch" class="form-inline mt-2 mt-md-0" action="{{ route('search') }}" method="GET">
-                            <input id="inputSearch" name="search" class="form-control form-control-sm input-rounded mr-sm-3 border-0 shadow" type="text" placeholder="Search" aria-label="Search">
-                        </form>
+                        @auth
+                            <form id="formSearch" class="form-inline mt-2 mt-md-0" action="{{ route('search') }}" method="GET">
+                                <input id="inputSearch" name="search" class="form-control form-control-sm input-rounded mr-sm-3 border-0 shadow" type="text" placeholder="Search" aria-label="Search">
+                            </form>
+                        @endauth
                         <div class="navbar-nav ml-md-3">
-                            @if (Route::has('login'))
-                                @guest
-                                    <li class="nav-item {{ (request()->is('login')) ? 'active' : '' }}">
-                                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            @guest
+                                <li class="nav-item {{ (request()->is('login')) ? 'active' : '' }}">
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                </li>
+                                @if (Route::has('register'))
+                                    <li class="nav-item {{ (request()->is('register')) ? 'active' : '' }}">
+                                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                     </li>
-                                    @if (Route::has('register'))
-                                        <li class="nav-item {{ (request()->is('register')) ? 'active' : '' }}">
-                                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                        </li>
-                                    @endif
-                                @else
-                                    <li class="nav-item dropdown">
-                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                            {{ Auth::user()->name }} <span class="caret"></span>
+                                @endif
+                            @else
+                                <li class="nav-item dropdown">
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        {{ Auth::user()->name }} <span class="caret"></span>
+                                    </a>
+
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{ url('/dashboard') }}">Dashboard</a>
+                                        
+                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
                                         </a>
 
-                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                            @auth
-                                                <a class="dropdown-item" href="{{ url('/dashboard') }}">Dashboard</a>
-                                            @endauth
-                                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                                onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
-                                                {{ __('Logout') }}
-                                            </a>
-
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                                @csrf
-                                            </form>
-                                        </div>
-                                    </li>
-                                @endguest
-                            @endif
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+                                    </div>
+                                </li>
+                            @endguest
                         </div>
                     </div>
                 </div>
@@ -113,10 +92,9 @@
             @yield('content')
         </main>
     </div>
-</body>
-</html>
+@endsection
 
-<script>
+@section('script')
     @yield('scripts')
     $('input#inputSearch').keypress((event) => {
         if(event.which == 13) {
@@ -124,4 +102,4 @@
             return false;
         }
     })
-</script>
+@endsection

@@ -39,14 +39,7 @@ Add Question
 <div class="row">
     <div class="col-md-3">
         <div class="row sticky-top sticky-offset">
-            <div class="list-group w-100 border-0 shadow">
-                <a href="#" class="list-group-item list-group-item-action list-group-item-danger active">All
-                    Topics</a>
-                <a href="#" class="list-group-item list-group-item-action">Technology</a>
-                <a href="#" class="list-group-item list-group-item-action">Social</a>
-                <a href="#" class="list-group-item list-group-item-action">Politics</a>
-            </div>
-            <div class="card mt-4 w-100 border-0 shadow">
+            <div class="card w-100 border-0 shadow">
                 <div class="card-body">
                     <h5 class="card-title">Hi {{ Auth::check() ? Auth::user()->name : 'You'}}!</h5>
                     <p class="card-text">Ask your question here!</p>

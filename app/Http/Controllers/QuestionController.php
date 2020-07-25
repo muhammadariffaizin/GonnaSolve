@@ -4,11 +4,22 @@ namespace GonnaSolve\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use GonnaSolve\Answer;
 use GonnaSolve\Question;
 
 class QuestionController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index() {
         $questions = Question::orderBy('questions.created_at', 'DESC')
                         ->paginate(10);
@@ -43,7 +54,7 @@ class QuestionController extends Controller
     public function delete($id) {
         $delete = Question::where('id', $id);
         $delete->delete();
-        return redirect()->route('index');
+        return redirect()->route('home');
     }
         
     public function show_detail_question($id) {

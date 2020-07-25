@@ -36,15 +36,19 @@
 @section('content')
 <div class="row">
     <div class="col-md-3 mb-4">
-        <div class="list-group sticky-top sticky-offset border-0 shadow">
-            <a href="#" class="list-group-item list-group-item-action list-group-item-danger active">All
-                Topics</a>
-            <a href="#" class="list-group-item list-group-item-action">Technology</a>
-            <a href="#" class="list-group-item list-group-item-action">Social</a>
-            <a href="#" class="list-group-item list-group-item-action">Politics</a>
+        <div class="card sticky-top sticky-offset border-0 shadow mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Hi {{ Auth::check() ? Auth::user()->name : 'You'}}!</h5>
+                <p class="card-text">Ask your question here!</p>
+                @if (Auth::check()) 
+                    <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#pageModal">{{ __('Ask Question') }}</a>
+                @else 
+                    <a href="{{ route('register') }}" class="btn btn-danger">{{ __('Sign Up') }}</a>
+                @endif
+            </div>
         </div>
     </div>
-    <div class="col-md-6 mb-4">
+    <div class="col-md-9 mb-4">
         @foreach($questions as $key => $question)
             <div class="card mb-4 shadow border-0">
                 <div class="card-header bg-danger text-light border-0">
@@ -81,21 +85,6 @@
         @endforeach
         <div class="row justify-content-center">
             {{ $questions->links() }}
-        </div>
-    </div>
-    <div class="col-md-3 mb-4">
-        <div class="row">
-            <div class="card sticky-top sticky-offset border-0 shadow w-100 mb-4">
-                <div class="card-body">
-                    <h5 class="card-title">Hi {{ Auth::check() ? Auth::user()->name : 'You'}}!</h5>
-                    <p class="card-text">Ask your question here!</p>
-                    @if (Auth::check()) 
-                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#pageModal">{{ __('Ask Question') }}</a>
-                    @else 
-                        <a href="{{ route('register') }}" class="btn btn-danger">{{ __('Sign Up') }}</a>
-                    @endif
-                </div>
-            </div>
         </div>
     </div>
 </div>

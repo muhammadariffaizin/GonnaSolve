@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-12">
         <p class="h3 border-bottom pb-2">Search Results</p>
         @if ($questions->total() > 0)
             <p class="h5 mb-4">Showing {{ $questions->firstItem() }} - {{ $questions->lastItem() }} from {{ $questions->total() }} questions</p>

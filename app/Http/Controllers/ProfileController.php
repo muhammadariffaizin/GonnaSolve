@@ -2,13 +2,13 @@
 
 namespace GonnaSolve\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
+use GonnaSolve\User;
 use GonnaSolve\Question;
 use GonnaSolve\Answer;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class DashboardController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -20,11 +20,6 @@ class DashboardController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
         $id = Auth::user()->id;
@@ -34,5 +29,18 @@ class DashboardController extends Controller
         $answers = Answer::where('answer_author', $id)
                     ->paginate(5, ['*'], 'answer');
         return view('dashboard', compact('questions', 'answers'));
+    }
+
+    public function edit() {
+        return view('profile_edit');
+    }
+
+    public function update(Request $request) {
+        User::where('id', $request->id)->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'email' => $request->email,
+        ]);
+        return redirect()->route('dashboard');
     }
 }

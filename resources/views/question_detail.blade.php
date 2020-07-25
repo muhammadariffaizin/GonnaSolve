@@ -14,8 +14,8 @@
                     <p class="card-text mt-3">{{ $question->question_content }}</p>
                     <div class="mb-3">
                         @if(Auth::check() && Auth::user()->id == $question->question_author) 
-                            <a href="#" id="editQuestion" class="btn btn-sm btn-light" data-toggle="modal" data-target="#pageModal" data-url="{{ route('question.edit',['id'=>$question->id])}}">{{ __('Edit') }}</a>
-                            <a href="{{ route('question.delete', ['id'=>$question->id]) }}" id="deleteQuestion" class="btn btn-sm btn-danger">{{ __('Delete') }}</a>
+                            <a href="#" id="editQuestion" class="btn btn-sm btn-link text-danger" data-toggle="modal" data-target="#pageModal" data-url="{{ route('question.edit',['id'=>$question->id])}}">{{ __('Edit') }}</a>
+                            <a href="{{ route('question.delete', ['id'=>$question->id]) }}" id="deleteQuestion" class="btn btn-sm btn-link text-danger">{{ __('Delete') }}</a>
                         @endif
                     </div>
                     <div class="row">
@@ -48,8 +48,8 @@
                                 <p>{{ $answer->answer_content }}</p>
                                 <div class="mb-3">
                                     @if(Auth::check() && Auth::user()->id == $answer->answer_author) 
-                                        <a href="#" id="editAnswer" class="btn btn-sm btn-light" data-toggle="modal" data-target="#pageModal" data-url="{{ route('answer.edit',['id'=>$answer->id])}}">{{ __('Edit') }}</a>
-                                        <a href="{{ route('answer.delete', ['id'=>$answer->id]) }}" id="deleteAnswer" class="btn btn-sm btn-danger">{{ __('Delete') }}</a>
+                                        <a href="#" id="editAnswer" class="btn btn-sm btn-link text-danger" data-toggle="modal" data-target="#pageModal" data-url="{{ route('answer.edit',['id'=>$answer->id])}}">{{ __('Edit') }}</a>
+                                        <a href="{{ route('answer.delete', ['id'=>$answer->id]) }}" id="deleteAnswer" class="btn btn-sm btn-link text-danger">{{ __('Delete') }}</a>
                                     @endif
                                 </div>
                                 <div class="row">
